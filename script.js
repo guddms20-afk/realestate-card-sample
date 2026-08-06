@@ -42,6 +42,15 @@
     family:'<circle cx="9" cy="7" r="3"/><circle cx="17" cy="9" r="2"/><path d="M3 21v-2a6 6 0 0 1 12 0v2M15 15a4 4 0 0 1 6 3.5V21"/>'
   };
   const iconSvg = name => `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name]||ICONS.sparkle}</svg>`;
+  const LINK_ICONS = {
+    phone:'<path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2a1.5 1.5 0 0 1 1.6-.3c1 .4 2 .6 3.1.7a1.5 1.5 0 0 1 1.4 1.5v3.4a1.5 1.5 0 0 1-1.5 1.5A18 18 0 0 1 2 4a1.5 1.5 0 0 1 1.5-1.5h3.4A1.5 1.5 0 0 1 8.4 4c.1 1.1.3 2.1.7 3.1a1.5 1.5 0 0 1-.3 1.6z"/>',
+    kakao:'<rect x="1" y="1" width="22" height="22" rx="6" fill="#FEE500" stroke="none"/><path d="M12 5.5c-4.4 0-8 2.7-8 6 0 2.1 1.4 3.9 3.6 5l-.8 2.8 3.2-2c.7.1 1.3.2 2 .2 4.4 0 8-2.7 8-6s-3.6-6-8-6z" fill="#191919" stroke="none"/>',
+    booking:'<rect x="1" y="1" width="22" height="22" rx="5" fill="#03C75A" stroke="none"/><path d="M6.5 5.5h3.2l4.6 7V5.5h3.2v13h-3.2l-4.6-7v7H6.5z" fill="#fff" stroke="none"/>',
+    map:'<path d="M12 22s7-6.2 7-13a7 7 0 1 0-14 0c0 6.8 7 13 7 13z" fill="#03C75A" stroke="none"/><path d="M9 6.5h2l2.8 4.2V6.5H16v7h-2l-2.8-4.2v4.2H9z" fill="#fff" stroke="none"/>',
+    instagram:'<rect x="3" y="3" width="18" height="18" rx="5" stroke="#E4405F" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="#E4405F" stroke-width="2"/><circle cx="17.3" cy="6.8" r="1" fill="#E4405F" stroke="none"/>',
+    website:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/>'
+  };
+  const linkSvg = name => `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${LINK_ICONS[name]||LINK_ICONS.website}</svg>`;
   const telHref = value => `tel:${String(value).replace(/[^\d+]/g,'')}`;
 
   async function loadConfig(){
@@ -62,6 +71,9 @@
     const image=document.getElementById('profile-image'); image.src=c.profileImage; image.alt=`${c.name} ${c.title} 프로필 사진`; image.onerror=()=>{image.src='images/profile-placeholder.svg'};
     const hrefs={phone:telHref(c.phone),email:`mailto:${c.email}`,...c.links};
     document.querySelectorAll('[data-link]').forEach(el=>{const href=hrefs[el.dataset.link]; if(href){el.href=href}else{el.hidden=true}});
+    document.querySelectorAll('.quick-grid a[data-link]').forEach(el=>{const icon=el.querySelector('.quick-icon');if(icon)icon.innerHTML=linkSvg(el.dataset.link)});
+    document.querySelectorAll('.btn[data-link]').forEach(el=>{let icon=el.querySelector('span[aria-hidden="true"]');if(!icon){icon=document.createElement('span');icon.setAttribute('aria-hidden','true');el.prepend(icon)}icon.innerHTML=linkSvg(el.dataset.link)});
+    document.querySelectorAll('.mobile-bar a[data-link]').forEach(el=>{if(!el.querySelector('.link-symbol'))el.insertAdjacentHTML('afterbegin',`<span class="link-symbol" aria-hidden="true">${linkSvg(el.dataset.link)}</span>`)});
     const list=document.getElementById('strength-list'); list.replaceChildren(...c.strengths.map(text=>Object.assign(document.createElement('li'),{textContent:text})));
     const serviceGrid=document.getElementById('service-grid');
     serviceGrid.replaceChildren(...c.services.map((service,index)=>{const item=document.createElement('article');item.className='service-card reveal';item.innerHTML=`<span class="card-number">${String(index+1).padStart(2,'0')}</span><div class="service-icon" aria-hidden="true">${safeHtml(service.icon||'◇')}</div><h3></h3><p></p><a href="mailto:${c.email}?subject=${encodeURIComponent(service.title+' 문의')}">이메일 문의 →</a>`;item.querySelector('h3').textContent=service.title;item.querySelector('p').textContent=service.description;return item}));
