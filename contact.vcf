@@ -1,0 +1,12 @@
+BEGIN:VCARD
+VERSION:3.0
+FN:샘플 고객
+N:샘플 고객;;;;
+ORG:프리미엄 브랜드
+TITLE:대표
+TEL;TYPE=CELL:010-1234-5678
+EMAIL:hello@example.com
+ADR;TYPE=WORK:;;서울특별시 강남구 테헤란로 123;;;;
+URL:https://example.com/
+NOTE:샘플 연락처입니다. 실제 연락처는 페이지의 연락처 저장 버튼에서 config.json 기준으로 자동 생성됩니다.
+END:VCARD

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="전문가 모바일 명함">
+  <meta name="theme-color" content="#17324d">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:image" content="images/og-image.svg">
+  <title>프리미엄 모바일 명함</title>
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문 바로가기</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="홈으로">
+        <span class="brand-mark" data-bind="brandMark">信</span>
+        <span><b data-bind="company">브랜드명</b><small data-bind="companyEnglish">PREMIUM BUSINESS CARD</small></span>
+      </a>
+      <a class="header-contact" id="save-contact" href="contact.vcf" download><span aria-hidden="true">＋</span> 연락처 저장</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <p class="eyebrow"><span></span><i data-bind="companyEnglish">PREMIUM BUSINESS CARD</i></p>
+          <p class="person"><span data-bind="name">이름</span><strong data-bind="title">직책</strong></p>
+          <h1 data-bind-html="headline">신뢰를 만드는<br><em>전문가의 한마디</em></h1>
+          <p class="hero-description" data-bind="intro">고객의 고민을 정확히 듣고 가장 알맞은 해답을 안내합니다.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" data-link="booking" target="_blank" rel="noopener">상담 예약하기 <span aria-hidden="true">→</span></a>
+            <a class="btn btn-outline" data-link="kakao" target="_blank" rel="noopener"><span aria-hidden="true">◇</span> 카카오 상담</a>
+          </div>
+          <div class="trust-badge"><span class="stars" aria-label="별점 5점">★★★★★</span><b data-bind="ratingText">상담 만족도 4.9 / 5</b><small>샘플 후기 포함</small></div>
+        </div>
+        <div class="portrait-wrap reveal">
+          <div class="portrait-frame"><img id="profile-image" src="images/profile.webp" alt="프로필 사진" width="1024" height="1280"></div>
+          <div class="portrait-note"><span data-bind="experience">15년</span><p data-bind-html="experienceLabel">전문 상담<br>실무 경험</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="quick-section" aria-label="빠른 연락 메뉴">
+      <div class="container quick-grid reveal">
+        <a data-link="phone"><span class="quick-icon">☎</span>전화</a>
+        <a data-link="kakao" target="_blank" rel="noopener"><span class="quick-icon">◇</span>카카오</a>
+        <a data-link="booking" target="_blank" rel="noopener"><span class="quick-icon">□</span>예약</a>
+        <a data-link="map" target="_blank" rel="noopener"><span class="quick-icon">⌖</span>지도</a>
+        <a data-link="instagram" target="_blank" rel="noopener"><span class="quick-icon">◎</span>인스타그램</a>
+        <a data-link="website" target="_blank" rel="noopener"><span class="quick-icon">↗</span>홈페이지</a>
+      </div>
+    </section>
+
+    <section class="section about" id="about">
+      <div class="container about-grid">
+        <div class="section-heading reveal"><p class="eyebrow"><span></span>ABOUT</p><h2 data-bind-html="aboutTitle">고객의 상황을 먼저<br>깊이 이해합니다.</h2></div>
+        <div class="about-body reveal">
+          <p data-bind="aboutText1">충분히 듣고 꼭 필요한 선택지를 명확하게 설명합니다.</p>
+          <p data-bind="aboutText2">처음 상담부터 이후 관리까지 한결같이 함께합니다.</p>
+          <ul class="check-list" id="strength-list"></ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section services" id="services">
+      <div class="container">
+        <div class="section-heading centered reveal"><p class="eyebrow"><span></span>SERVICES<span></span></p><h2 data-bind-html="servicesTitle">전문성이 필요한 순간,<br>든든하게 곁에 있습니다.</h2></div>
+        <div class="service-grid" id="service-grid"></div>
+      </div>
+    </section>
+
+    <section class="section reviews" id="reviews">
+      <div class="container">
+        <div class="section-heading split reveal"><div><p class="eyebrow"><span></span>REVIEWS</p><h2 data-bind-html="reviewsTitle">먼저 경험한 고객의<br>이야기를 확인하세요.</h2></div><p>상담의 시작부터 이후까지<br>명확하고 세심하게 안내합니다.</p></div>
+        <div class="review-track" id="review-track"></div>
+      </div>
+    </section>
+
+    <section class="section faq-location">
+      <div class="container two-column">
+        <div class="faq reveal"><p class="eyebrow"><span></span>FAQ</p><h2>자주 묻는 질문</h2><div class="accordion" id="faq-list"></div></div>
+        <aside class="location-card reveal" aria-labelledby="location-title">
+          <div class="location-top"><p class="eyebrow light"><span></span>LOCATION</p><h2 id="location-title" data-bind-html="locationTitle">편안한 상담을 위해<br>예약 후 방문해 주세요.</h2><div class="map-mark" aria-hidden="true">⌖</div></div>
+          <dl><div><dt>주소</dt><dd data-bind-html="address">서울특별시 강남구 테헤란로 123<br>프리미엄타워 8층</dd></div><div><dt>영업시간</dt><dd data-bind-html="hours">평일 09:30 – 18:00<br>주말·공휴일 휴무</dd></div><div><dt>주차 안내</dt><dd data-bind="parking">건물 지하 주차장 1시간 지원</dd></div></dl>
+          <a class="btn btn-primary" data-link="map" target="_blank" rel="noopener">지도에서 보기 <span aria-hidden="true">→</span></a>
+        </aside>
+      </div>
+    </section>
+
+    <section class="final-cta"><div class="container cta-inner reveal"><div><p data-bind="companyEnglish">PREMIUM BUSINESS CARD</p><h2 data-bind-html="ctaTitle">고민하지 말고,<br>지금 편하게 문의하세요.</h2></div><div class="cta-actions"><a class="btn btn-gold" data-link="booking" target="_blank" rel="noopener">상담 예약하기 <span aria-hidden="true">→</span></a><a class="btn btn-dark-outline" data-link="kakao" target="_blank" rel="noopener">◇ 카카오톡 문의</a></div></div></section>
+  </main>
+
+  <footer><div class="container footer-inner"><div><b data-bind="company">브랜드명</b><p><span data-bind="representative">대표자</span> · 사업자등록번호 <span data-bind="businessNumber">000-00-00000</span></p><p data-bind="addressPlain">서울특별시 강남구 테헤란로 123</p></div><div><a data-link="email" data-bind="email">hello@example.com</a><p>© <span id="year"></span> <span data-bind="companyEnglish">PREMIUM BUSINESS CARD</span>.</p></div></div><p class="disclaimer">* 본 페이지의 인물, 후기, 수치와 연락처는 템플릿 시연을 위한 예시입니다. 실제 납품 전 고객 정보로 교체하세요.</p></footer>
+  <nav class="mobile-bar" aria-label="모바일 빠른 문의"><a data-link="kakao" target="_blank" rel="noopener">◇ 카카오 상담</a><a data-link="phone">☎ 전화 문의</a></nav>
+  <div class="config-notice" id="config-notice" role="status" hidden>미리보기에서는 기본 정보가 표시됩니다. GitHub Pages에 올리면 config.json이 자동 적용됩니다.</div>
+</body>
+</html>
