@@ -2,7 +2,7 @@
   'use strict';
 
   const defaults = {
-    company: '프리미엄 브랜드', companyEnglish: 'PREMIUM BUSINESS CARD', brandMark: '信',
+    company: '프리미엄 브랜드', companyEnglish: 'PREMIUM BUSINESS CARD', brandMark: 'sparkle',
     name: '김고객', title: '대표', representative: '김고객 대표', businessNumber: '000-00-00000',
     phone: '010-1234-5678', email: 'hello@example.com', profileImage: 'images/profile.webp',
     headline: '신뢰를 만드는<br><em>전문가의 한마디</em>', intro: '고객의 고민을 정확히 듣고 가장 알맞은 해답을 안내합니다.',
@@ -20,6 +20,28 @@
 
   const merge = (base, extra) => ({...base, ...extra, links:{...base.links,...(extra.links||{})}, theme:{...base.theme,...(extra.theme||{})}});
   const safeHtml = (value='') => String(value).replace(/<(?!\/?(?:br|em)\b)[^>]*>/gi,'');
+  const ICONS = {
+    calculator:'<rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h4"/>',
+    book:'<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M8 7h8M8 11h6"/>',
+    percent:'<path d="m19 5-14 14"/><circle cx="7" cy="7" r="2"/><circle cx="17" cy="17" r="2"/>',
+    building:'<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 21v-4h6v4M8 7h.01M12 7h.01M16 7h.01M8 11h.01M12 11h.01M16 11h.01"/>',
+    home:'<path d="m3 11 9-8 9 8"/><path d="M5 10v11h14V10M9 21v-7h6v7"/>',
+    storefront:'<path d="M4 10v10h16V10M3 10l2-6h14l2 6"/><path d="M8 20v-6h5v6M3 10c0 2 3 2 3 0 0 2 3 2 3 0 0 2 3 2 3 0 0 2 3 2 3 0 0 2 3 2 3 0"/>',
+    shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/>',
+    sparkle:'<path d="m12 3 1.4 4.1L17.5 8.5l-4.1 1.4L12 14l-1.4-4.1-4.1-1.4 4.1-1.4zM19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8zM5 14l.8 2.2L8 17l-2.2.8L5 20l-.8-2.2L2 17l2.2-.8z"/>',
+    eye:'<path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12"/><circle cx="12" cy="12" r="2.5"/>',
+    droplet:'<path d="M12 2s6 6.2 6 12a6 6 0 0 1-12 0c0-5.8 6-12 6-12"/>',
+    brush:'<path d="m14 4 6 6-8 8-6-6z"/><path d="M6 12c-3 1-4 3-4 6 2 2 5 2 7-1"/>',
+    medical:'<path d="M9 3h6v6h6v6h-6v6H9v-6H3V9h6z"/>',
+    stethoscope:'<path d="M6 3v5a4 4 0 0 0 8 0V3M4 3h4M12 3h4M10 16a4 4 0 1 0 8 0v-2"/><circle cx="18" cy="12" r="2"/>',
+    clipboard:'<rect x="5" y="4" width="14" height="18" rx="2"/><path d="M9 4V2h6v2M9 11h6M9 15h6"/>',
+    heart:'<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/>',
+    scales:'<path d="M12 3v18M6 6h12M4 6 1 12h6zM20 6l-3 6h6zM7 21h10"/>',
+    document:'<path d="M6 2h8l4 4v16H6z"/><path d="M14 2v5h5M9 13h6M9 17h6"/>',
+    briefcase:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V4h8v3M3 12h18M10 12v2h4v-2"/>',
+    family:'<circle cx="9" cy="7" r="3"/><circle cx="17" cy="9" r="2"/><path d="M3 21v-2a6 6 0 0 1 12 0v2M15 15a4 4 0 0 1 6 3.5V21"/>'
+  };
+  const iconSvg = name => `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name]||ICONS.sparkle}</svg>`;
   const telHref = value => `tel:${String(value).replace(/[^\d+]/g,'')}`;
 
   async function loadConfig(){
@@ -35,6 +57,7 @@
     const vars={bg:'--bg',surface:'--surface',primary:'--primary',primaryDark:'--primary-dark',accent:'--accent',text:'--text',muted:'--muted',border:'--border',soft:'--soft'};
     Object.entries(vars).forEach(([key,name])=>c.theme[key]&&document.documentElement.style.setProperty(name,c.theme[key]));
     document.querySelectorAll('[data-bind]').forEach(el=>{const key=el.dataset.bind;if(c[key]!==undefined)el.textContent=c[key]});
+    document.querySelector('.brand-mark').innerHTML=iconSvg(c.brandMark);
     document.querySelectorAll('[data-bind-html]').forEach(el=>{const key=el.dataset.bindHtml;if(c[key]!==undefined)el.innerHTML=safeHtml(c[key])});
     const image=document.getElementById('profile-image'); image.src=c.profileImage; image.alt=`${c.name} ${c.title} 프로필 사진`; image.onerror=()=>{image.src='images/profile-placeholder.svg'};
     const hrefs={phone:telHref(c.phone),email:`mailto:${c.email}`,...c.links};
@@ -42,6 +65,7 @@
     const list=document.getElementById('strength-list'); list.replaceChildren(...c.strengths.map(text=>Object.assign(document.createElement('li'),{textContent:text})));
     const serviceGrid=document.getElementById('service-grid');
     serviceGrid.replaceChildren(...c.services.map((service,index)=>{const item=document.createElement('article');item.className='service-card reveal';item.innerHTML=`<span class="card-number">${String(index+1).padStart(2,'0')}</span><div class="service-icon" aria-hidden="true">${safeHtml(service.icon||'◇')}</div><h3></h3><p></p><a href="mailto:${c.email}?subject=${encodeURIComponent(service.title+' 문의')}">이메일 문의 →</a>`;item.querySelector('h3').textContent=service.title;item.querySelector('p').textContent=service.description;return item}));
+    serviceGrid.querySelectorAll('.service-icon').forEach((el,index)=>{el.innerHTML=iconSvg(c.services[index]?.icon)});
     const reviews=document.getElementById('review-track');
     reviews.replaceChildren(...c.reviews.map(review=>{const item=document.createElement('article');item.className='review-card reveal';item.innerHTML='<div class="stars" aria-label="별점 5점">★★★★★</div><blockquote></blockquote><div><span></span><small></small></div>';item.querySelector('blockquote').textContent=`“${review.text}”`;item.querySelector('span').textContent=review.author;item.querySelector('small').textContent=review.meta;return item}));
     const faq=document.getElementById('faq-list');
